@@ -84,13 +84,14 @@ This step also involved ensuring the dataset was clean — no missing values wer
 2. Data Preprocessing
 
 ✔️ Challenge: Categorical Variables Not Directly Usable
+
 Scikit-learn models require all features to be numerical. However, the dataset included several categorical fields such as:
 `job`, `marital`, `education`, `housing`, `loan`, `contact`, `month`, `poutcome`, etc.
 If passed directly to the model, these would cause errors or misleading inferences.
 
 🛠️ How We Tackled It:
 
-We used **one-hot encoding** via `pandas.get_dummies()` to transform these categorical features into binary flags. For example, the `job` field which contains values like 'admin.', 'technician', 'services', etc., was converted into multiple columns like `job_admin.`, `job_technician`, and so on.
+We used one-hot encoding via `pandas.get_dummies()` to transform these categorical features into binary flags. For example, the `job` field which contains values like 'admin.', 'technician', 'services', etc., was converted into multiple columns like `job_admin.`, `job_technician`, and so on.
 To reduce redundancy and avoid multicollinearity, we dropped the first level of each categorical field:
 ```python
 df_encoded = pd.get_dummies(df, drop_first=True)
@@ -111,8 +112,11 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 3. Model Training: Decision Tree Classifier
 
 ✔️ Challenge: Need for Interpretability
+
 In a banking or financial setting, models aren’t just evaluated based on accuracy — they must be nterpretable. Business stakeholders should understand why a model makes a particular decision, especially in cases involving customer decisions or risk profiles.
+
 🛠️ Solution: Decision Tree
+
 We chose DecisionTreeClassifier from scikit-learn due to its:
 Simplicity
 Visual interpretability (via tree diagrams)
@@ -135,6 +139,7 @@ Once trained, we used the test set to evaluate the model's performance. The key 
   Confusion Matrix
 
 🧪 Results:
+
 ```python
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
@@ -233,8 +238,8 @@ Through this, we learned that model interpretability is just as important as per
    This tells the algorithm to give more importance to the minority class during training, helping it pay closer attention to “yes” responses.
 
 2. Resampling Techniques
-   We considered:
 
+   We considered:
      Oversampling the minority class using techniques like **SMOTE (Synthetic Minority Over-sampling Technique)**, which generates synthetic examples based on existing minority samples.
      Undersampling the majority class to reduce its dominance in the training data.
    
